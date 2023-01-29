@@ -40,31 +40,31 @@ for f in range(len(room)):
 coin = 0
 while coin == 0:
     print('куда вы хотите пойти?')
-    Direction = str(input("Вперёд:Назад:Влево:Вправо "))
+    Direction = str(input("Вперёд:Назад:Влево:Вправо\n   1     2     3      4  \nВвод: "))
     Direction = Direction.lower()
     match Direction:
-        case 'вперёд':
+        case 'вперёд' | '1':
             if room[Px - 1][Py] == '-':
                 print('На пути стена')
             else:
                 room[Px][Py] = 'x'
                 Px -= 1
                 room[Px][Py] = '0'
-        case 'назад':
+        case 'назад' | '2':
             if room[Px + 1][Py] == '-':
                 print('На пути стена')
             else:
                 room[Px][Py] = 'x'
                 Px += 1
                 room[Px][Py] = '0'
-        case 'влево':
+        case 'влево' | '3':
             if room[Px][Py - 1] == '-':
                 print('На пути стена')
             else:
                 room[Px][Py] = 'x'
                 Py -= 1
                 room[Px][Py] = '0'
-        case 'вправо':
+        case 'вправо' | '4':
             if room[Px][Py + 1] == '-':
                 print('На пути стена')
             else:
