@@ -1,8 +1,10 @@
 import pickle
+from os import system as sys
 
 room = []
 loaded_dict = None
-l = 10
+l = 0
+
 
 def main():
     ans = input('Create new map|choose existed\n')
@@ -12,7 +14,8 @@ def main():
 
         global room
 
-        print("А теперь нарисуйте уровень. Используйте (-) для стенок, (x) для клеток перемещения. \n Не забывайте ставить пробелы между каждой клеткой!\n")
+        print(
+            "А теперь нарисуйте уровень. Используйте (-) для стенок, (x) для клеток перемещения. \n Не забывайте ставить пробелы между каждой клеткой!\n")
 
         global l
         for i in range(a):
@@ -25,6 +28,7 @@ def main():
             room = pickle.load(f)
             global loaded_dict
             choose()
+
 
 def choose():
     num = int(input('Pick a map number', loaded_dict.keys))
@@ -69,50 +73,62 @@ def game():
                 Tx = int(input('задайте позицию сокровища X: '))
                 Ty = int(input('задайте позицию сокровища Y: '))
 
+    sys('clear')
+    for f in range(len(room)):
+        for g in range(len(room[l])):
+            print(room[f][g], end=" ")
+        print()
+
+    while True:
+        print('куда вы хотите пойти?')
+        Direction = str(input("Вперёд:Назад:Влево:Вправо\n   1     2     3      4  \nВвод: "))
+        Direction = Direction.lower()
+        match Direction:
+            case 'вперёд' | '1':
+                if room[Px - 1][Py] == '-':
+                    sys('clear')
+                    print('На пути стена')
+                else:
+                    room[Px][Py] = 'x'
+                    Px -= 1
+                    room[Px][Py] = '0'
+                    sys('clear')
+            case 'назад' | '2':
+                if room[Px + 1][Py] == '-':
+                    sys('clear')
+                    print('На пути стена')
+                else:
+                    room[Px][Py] = 'x'
+                    Px += 1
+                    room[Px][Py] = '0'
+                    sys('clear')
+            case 'влево' | '3':
+                if room[Px][Py - 1] == '-':
+                    sys('clear')
+                    print('На пути стена')
+                else:
+                    room[Px][Py] = 'x'
+                    Py -= 1
+                    room[Px][Py] = '0'
+                    sys('clear')
+            case 'вправо' | '4':
+                if room[Px][Py + 1] == '-':
+                    sys('clear')
+                    print('На пути стена')
+                else:
+                    room[Px][Py] = 'x'
+                    Py += 1
+                    room[Px][Py] = '0'
+                    sys('clear')
+        if Px == Tx and Py == Ty:
+            sys('clear')
+            print('ТЫ НАШЁЛ СОКРОВИЩЕ!')
+            return
+        else:
             for f in range(len(room)):
                 for g in range(len(room[l])):
                     print(room[f][g], end=" ")
                 print()
 
-            while True:
-                print('куда вы хотите пойти?')
-                Direction = str(input("Вперёд:Назад:Влево:Вправо\n   1     2     3      4  \nВвод: "))
-                Direction = Direction.lower()
-                match Direction:
-                    case 'вперёд' | '1':
-                        if room[Px - 1][Py] == '-':
-                            print('На пути стена')
-                        else:
-                            room[Px][Py] = 'x'
-                            Px -= 1
-                            room[Px][Py] = '0'
-                    case 'назад' | '2':
-                        if room[Px + 1][Py] == '-':
-                            print('На пути стена')
-                        else:
-                            room[Px][Py] = 'x'
-                            Px += 1
-                            room[Px][Py] = '0'
-                    case 'влево' | '3':
-                        if room[Px][Py - 1] == '-':
-                            print('На пути стена')
-                        else:
-                            room[Px][Py] = 'x'
-                            Py -= 1
-                            room[Px][Py] = '0'
-                    case 'вправо' | '4':
-                        if room[Px][Py + 1] == '-':
-                            print('На пути стена')
-                        else:
-                            room[Px][Py] = 'x'
-                            Py += 1
-                            room[Px][Py] = '0'
-                if Px == Tx and Py == Ty:
-                    print('ТЫ НАШЁЛ СОКРОВИЩЕ!')
-                    break
-                else:
-                    for f in range(len(room)):
-                        for g in range(len(room[l])):
-                            print(room[f][g], end=" ")
-                        print()
+
 main()
